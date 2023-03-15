@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/bi-model-development/react-web-app-testing:$SHORT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/bi-model-development/react-web-app-testing:$SHORT_SHA']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'run', 'deploy', 'react-web-app-testing', '--region=us-central1', '--platform=managed', '--image=gcr.io/bi-model-development/react-web-app-testing:$SHORT_SHA']
+timeout: 1600s
